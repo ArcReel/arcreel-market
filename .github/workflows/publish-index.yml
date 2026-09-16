@@ -1,0 +1,16 @@
+# main 有新提交时重生成 arcreel-market.json，由 github-actions[bot] 提交；跟随主仓 main，有意不钉版本。
+# 默认分支不叫 main 时，把下面的分支名改成你的默认分支。
+name: Publish index
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  publish-index:
+    uses: ArcReel/ArcReel/.github/workflows/market-publish-index.yml@main # zizmor: ignore[unpinned-uses]
+    permissions:
+      contents: write
