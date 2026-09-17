@@ -72,7 +72,7 @@ endpoints/
 
 1. Fork 本仓库，或点 **Use this template** 新建仓库。
 2. 在新仓库的 **Settings → Actions** 里启用 workflow（fork 默认不运行 workflow）。
-3. 增删 `endpoints/<slug>/` 后 push 到默认分支，`github-actions[bot]` 会自动重生成 `arcreel-market.json` 并提交。默认分支不叫 `main` 时，把 `.github/workflows/publish-index.yml` 里的分支名改掉。
+3. 增删 `endpoints/<slug>/` 后 push 到默认分支，`github-actions[bot]` 会自动重生成 `arcreel-market.json` 并提交。默认分支不叫 `main` 时，把 `.github/workflows/publish-index.yml` 里的分支名改掉。官方仓给 main 开了分支保护，用 GitHub App 令牌推送索引；你的仓库如果也开启分支保护，需要自备一个 GitHub App，并在仓库 secrets 里配置 `MARKET_APP_CLIENT_ID` 与 `MARKET_APP_PRIVATE_KEY`，再按下方「进阶」映射到工作流，否则无需任何配置。
 4. 在 ArcReel 设置页「市场」→「管理市场源」添加市场源，地址填 `owner/repo`。
 
 两个 workflow 各只有一行 `uses:`，校验与生成规则由 ArcReel 主仓维护，随主仓更新，你无需维护。
@@ -96,6 +96,16 @@ endpoints/
 ### 进阶
 
 在 ArcReel 源码目录执行 `uv run python -m lib.market check <市场源目录>`，可以在本地跑与 CI 相同的全部校验；`generate <市场源目录>` 则在本地重生成索引。
+
+默认分支受保护时，在 `.github/workflows/publish-index.yml` 的 job 下显式映射 App 的两个 secrets，由主仓工作流换取 App 令牌推送索引：
+
+```yaml
+    secrets:
+      MARKET_APP_CLIENT_ID: ${{ secrets.MARKET_APP_CLIENT_ID }}
+      MARKET_APP_PRIVATE_KEY: ${{ secrets.MARKET_APP_PRIVATE_KEY }}
+```
+
+这一写法要等 ArcReel 主仓的 `market-publish-index.yml` 支持这两个 secrets 后才能启用。不映射时主仓工作流使用 `GITHUB_TOKEN`，这要求默认分支允许它直接推送。
 
 ## 许可证
 
