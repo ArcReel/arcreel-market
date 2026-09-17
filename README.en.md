@@ -72,10 +72,10 @@ Open a pull request against this repository. See [CONTRIBUTING.md](CONTRIBUTING.
 
 1. Fork this repository, or click **Use this template** to create a new one.
 2. Enable workflows under **Settings → Actions** in the new repository (forks don't run workflows by default).
-3. Add or remove `endpoints/<slug>/` and push to the default branch. `github-actions[bot]` regenerates and commits `arcreel-market.json`. If your default branch isn't `main`, change the branch name in `.github/workflows/publish-index.yml`. The official repository protects `main` and pushes the index with a GitHub App token. If you also protect your default branch, bring your own GitHub App and add the repository secrets `MARKET_APP_CLIENT_ID` and `MARKET_APP_PRIVATE_KEY`, then map them in the workflow as described under Advanced; otherwise no setup is needed.
+3. Add or remove `endpoints/<slug>/` and push to the default branch. A bot regenerates and commits `arcreel-market.json`. If your default branch isn't `main`, change the branch name in `.github/workflows/publish-index.yml`. No setup is needed unless your default branch is protected; if it is, see Advanced below.
 4. In ArcReel, open **Market → Manage sources**, add a source and enter `owner/repo`.
 
-Each workflow is a single `uses:` line. Validation and generation rules are maintained in the ArcReel repository and follow its updates, so there is nothing for you to maintain.
+Both workflows only call reusable workflows from the ArcReel repository. Validation and generation rules are maintained there and follow its updates, so there is nothing for you to maintain.
 
 ### Without CI
 
@@ -97,15 +97,7 @@ GitHub is optional too: any `https://` URL ending in `arcreel-market.json` works
 
 From an ArcReel source checkout, run `uv run python -m lib.market check <market-source-dir>` to run every CI check locally; `generate <market-source-dir>` regenerates the index locally.
 
-If your default branch is protected, map the App's two secrets explicitly under the job in `.github/workflows/publish-index.yml`; the ArcReel workflow exchanges them for an App token to push the index:
-
-```yaml
-    secrets:
-      MARKET_APP_CLIENT_ID: ${{ secrets.MARKET_APP_CLIENT_ID }}
-      MARKET_APP_PRIVATE_KEY: ${{ secrets.MARKET_APP_PRIVATE_KEY }}
-```
-
-This only works once `market-publish-index.yml` in the ArcReel repository supports these two secrets. Without the mapping the ArcReel workflow uses `GITHUB_TOKEN`, which requires the default branch to accept its direct pushes.
+If your default branch is protected (as the official repository's is), the bot needs a GitHub App token to push the index: set up a GitHub App, install it on your repository, list it as a bypass actor in your ruleset, and add the repository secrets `MARKET_APP_CLIENT_ID` (the App's client id) and `MARKET_APP_PRIVATE_KEY` (its private key). `publish-index.yml` already maps both secrets: when both are set, the index is pushed as `<app-slug>[bot]`; otherwise the workflow falls back to `GITHUB_TOKEN` and pushes as `github-actions[bot]`, which requires the default branch to accept its direct pushes.
 
 ## License
 
