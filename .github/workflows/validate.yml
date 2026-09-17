@@ -1,0 +1,12 @@
+# 校验规则与候选索引生成由 ArcReel 主仓维护，本文件只负责接线；跟随主仓 main，有意不钉版本。
+name: Validate
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    uses: ArcReel/ArcReel/.github/workflows/market-validate.yml@main # zizmor: ignore[unpinned-uses]
