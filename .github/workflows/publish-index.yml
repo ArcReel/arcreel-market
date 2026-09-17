@@ -1,5 +1,6 @@
-# main 有新提交时重生成 arcreel-market.json，由 github-actions[bot] 提交；跟随主仓 main，有意不钉版本。
+# main 有新提交时重生成 arcreel-market.json 并由 bot 提交；跟随主仓 main，有意不钉版本。
 # 默认分支不叫 main 时，把下面的分支名改成你的默认分支。
+# 两个 App secrets 可选：均已配置时用 App 令牌推送（可绕过分支保护），否则使用 GITHUB_TOKEN。
 name: Publish index
 
 on:
@@ -14,3 +15,6 @@ jobs:
     uses: ArcReel/ArcReel/.github/workflows/market-publish-index.yml@main # zizmor: ignore[unpinned-uses]
     permissions:
       contents: write
+    secrets:
+      MARKET_APP_CLIENT_ID: ${{ secrets.MARKET_APP_CLIENT_ID }}
+      MARKET_APP_PRIVATE_KEY: ${{ secrets.MARKET_APP_PRIVATE_KEY }}
