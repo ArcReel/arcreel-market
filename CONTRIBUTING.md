@@ -25,7 +25,8 @@ CI 会校验目录、slug、图标、定义本身，以及由你的改动生成�
 3. **不收**指向具体第三方中转站、代理或转售站点的端点。
 4. **不收**与已有条目同作者、同名的重复定义；改进已有定义请直接更新那一条。
 5. **不收**与 ArcReel 随版内置定义重复的定义。
-6. 条目内容有任何变更，都**必须升** `meta.version`。ArcReel 按版本号判断已安装端点是否可更新。
+6. **不收**以推广某项商业服务为主要目的的投稿。这类合作请联系 support@arc-reel.com。
+7. 条目内容有任何变更，都**必须升** `meta.version`。ArcReel 按版本号判断已安装端点是否可更新。
 
 ### 下架
 
@@ -56,7 +57,8 @@ CI validates the directory, slug, icon, the definition itself, and the index gen
 3. **Not accepted**: endpoints pointing at a specific third-party relay, proxy or reseller site.
 4. **Not accepted**: duplicates of an existing entry with the same author and name. To improve an existing definition, update that entry.
 5. **Not accepted**: definitions that duplicate ones built into ArcReel.
-6. Any change to an entry **must bump** `meta.version`. ArcReel compares versions to decide whether an installed endpoint can be updated.
+6. **Not accepted**: submissions whose main purpose is to promote a commercial service. For that kind of collaboration, contact support@arc-reel.com.
+7. Any change to an entry **must bump** `meta.version`. ArcReel compares versions to decide whether an installed endpoint can be updated.
 
 ### Removal
 
