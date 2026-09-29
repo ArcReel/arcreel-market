@@ -1,8 +1,9 @@
 # 索引发布完成后，通知官方营销站重建（repository_dispatch，事件类型 market-updated）。
 # 选 workflow_run 而不是 push：push 时索引可能尚未由 bot 重生成，等 Publish index 结束再发，重建读到的才是最新索引。
 # 目标仓库（owner/repo）放在 repository variable MARKET_REBUILD_TARGET_REPO，
-# 令牌放在 secret MARKET_REBUILD_TOKEN（对目标仓有 Contents: Read and write 的细粒度 PAT 或 App 安装令牌）。
+# 令牌放在 secret MARKET_REBUILD_TOKEN（对目标仓有 Contents: Read and write 的细粒度 PAT；GitHub App 安装令牌一小时过期，不适合长期存放在 secret 里）。
 # 两者任一缺失时跳过（作业成功、带 notice），fork 与模板仓无需配置。
+# 用 App 令牌推送索引时，bot 提交会再触发一次 Publish index（无变化）；跳过由 bot 索引提交（提交信息与 [bot] 作者同时匹配）触发的运行，避免同一次更新通知两次。
 # 默认分支不叫 main 时，把下面的分支名改成你的默认分支。
 name: Notify market updated
 
@@ -20,6 +21,8 @@ jobs:
     timeout-minutes: 5
     if: >-
       github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
+      && !(startsWith(github.event.workflow_run.head_commit.message, 'chore: regenerate index')
+      && endsWith(github.event.workflow_run.head_commit.author.name, '[bot]'))
     steps:
       - name: Dispatch market-updated
         env:

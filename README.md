@@ -66,7 +66,7 @@ endpoints/
 
 ## 投稿
 
-在 ArcReel 的「调用端点」里点「分享到官方市场」，即可从客户端一键提交，由官方服务代为开 PR；也可以自己向本仓库提 PR。两种方式的流程、内容准则、审核口径和下架方式见 [CONTRIBUTING.md](CONTRIBUTING.md)。
+在 ArcReel 的「调用端点」界面点击「分享到官方市场」，即可从客户端一键提交，由官方服务代为开 PR；也可以自己向本仓库提 PR。两种方式的流程、内容准则、审核口径和下架方式见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
 ## 开自己的市场源
 

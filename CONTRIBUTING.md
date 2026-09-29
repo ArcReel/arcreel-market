@@ -9,13 +9,13 @@
 1. 在 ArcReel 的「调用端点」里写好定义，并用真实供应商跑通一次生成。
 2. 点「导出」得到定义文件。确认 `meta` 里的 `name`、`author`、`version` 正确，按需补 `description`、`homepage`、`min_app_version`。
 3. Fork 本仓库，把文件放到 `endpoints/<slug>/definition.json`。slug 是目录名，规则 `^[a-z0-9][a-z0-9-]{0,63}$`，不能与已有条目重复。可选放一个 `icon.png` / `icon.webp` / `icon.svg`（正方形，不超过 64 KB）。
-4. 提 PR，填 PR 模板里的两行，并保持「投稿来源」为手工投稿。**不要改 `arcreel-market.json`**：合入后由 bot 重生成。
+4. 提 PR，填 PR 模板里的两行，并保持「投稿来源」为「手工 / manual」。**不要改 `arcreel-market.json`**：合入后由 bot 重生成。
 
 CI 会校验目录、slug、图标、定义本身，以及由你的改动生成的索引。CI 通过后，维护者只按下面的内容准则审核。
 
 ### 从 ArcReel 客户端一键提交
 
-不想 fork 和手写 PR 时，可以在 ArcReel 的「调用端点」里对端点点「分享到官方市场」。客户端先在本地校验，通过后由官方服务代你向本仓开 PR，不需要 GitHub 账号，可选填 GitHub 用户名以便在 PR 里 @ 你。之后在客户端里能看到提交状态：审核中、已采纳或已拒绝。
+不想 fork 和手写 PR 时，可以在 ArcReel 的「调用端点」列表中，点击对应端点的「分享到官方市场」。客户端先在本地校验，通过后由官方服务代你向本仓开 PR，不需要 GitHub 账号，可选填 GitHub 用户名以便在 PR 里 @ 你。之后在客户端里能看到提交状态：审核中、已采纳或已拒绝。
 
 - 内容准则、`meta.version` 规则与手工投稿完全相同，一次提交对应一个条目。
 - 从同一 ArcReel 实例再次提交同一 slug 时，如果上一份 PR 还在审核，新内容会更新到那个 PR 上，不会另开。PR 合并或关闭后再提交，则是一个新 PR。
@@ -65,7 +65,7 @@ CI 会校验目录、slug、图标、定义本身，以及由你的改动生成�
 1. Write the definition under **Endpoints** in ArcReel and complete at least one real generation with the provider.
 2. Click **Export** to get the definition file. Check `name`, `author` and `version` in `meta`, and add `description`, `homepage` or `min_app_version` as needed.
 3. Fork this repository and put the file at `endpoints/<slug>/definition.json`. The slug is the directory name; it must match `^[a-z0-9][a-z0-9-]{0,63}$` and must not collide with an existing entry. Optionally add `icon.png` / `icon.webp` / `icon.svg` (square, at most 64 KB).
-4. Open a pull request, fill in the two lines of the template, and keep the submission source as manual. **Do not edit `arcreel-market.json`**: the bot regenerates it after merge.
+4. Open a pull request, fill in the two lines of the template, and keep the submission source as `manual`. **Do not edit `arcreel-market.json`**: the bot regenerates it after merge.
 
 CI validates the directory, slug, icon, the definition itself, and the index generated from your change. Once CI passes, maintainers review only against the content guidelines below.
 
