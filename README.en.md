@@ -66,7 +66,7 @@ You don't need to write this by hand: tune the definition under **Endpoints** in
 
 ## Contributing
 
-Open a pull request against this repository. See [CONTRIBUTING.md](CONTRIBUTING.md) for the process, content guidelines and removals.
+Choose **Share to official market** on an endpoint under **Endpoints** in ArcReel to submit from the client in one click; the official service opens the pull request for you. You can also open a pull request against this repository yourself. See [CONTRIBUTING.md](CONTRIBUTING.md) for the process of both routes, content guidelines, review policy and removals.
 
 ## Run your own market source
 
@@ -75,7 +75,7 @@ Open a pull request against this repository. See [CONTRIBUTING.md](CONTRIBUTING.
 3. Add or remove `endpoints/<slug>/` and push to the default branch. A bot regenerates and commits `arcreel-market.json`. If your default branch isn't `main`, change the branch name in `.github/workflows/publish-index.yml`. No setup is needed unless your default branch is protected; if it is, see Advanced below.
 4. In ArcReel, open **Market → Manage sources**, add a source and enter `owner/repo`.
 
-Both workflows only call reusable workflows from the ArcReel repository. Validation and generation rules are maintained there and follow its updates, so there is nothing for you to maintain.
+The validation and index publishing workflows only call reusable workflows from the ArcReel repository. Validation and generation rules are maintained there and follow its updates, so there is nothing for you to maintain.
 
 ### Without CI
 

@@ -1,0 +1,43 @@
+# 索引发布完成后，通知官方营销站重建（repository_dispatch，事件类型 market-updated）。
+# 选 workflow_run 而不是 push：push 时索引可能尚未由 bot 重生成，等 Publish index 结束再发，重建读到的才是最新索引。
+# 目标仓库（owner/repo）放在 repository variable MARKET_REBUILD_TARGET_REPO，
+# 令牌放在 secret MARKET_REBUILD_TOKEN（对目标仓有 Contents: Read and write 的细粒度 PAT 或 App 安装令牌）。
+# 两者任一缺失时跳过（作业成功、带 notice），fork 与模板仓无需配置。
+# 默认分支不叫 main 时，把下面的分支名改成你的默认分支。
+name: Notify market updated
+
+on:
+  workflow_run: # zizmor: ignore[dangerous-triggers] 不检出代码、不读取事件中的不可信字段，只发一个固定 body 的请求
+    workflows: ["Publish index"]
+    types: [completed]
+    branches: [main]
+
+permissions: {}
+
+jobs:
+  notify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    if: >-
+      github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
+    steps:
+      - name: Dispatch market-updated
+        env:
+          TARGET_REPO: ${{ vars.MARKET_REBUILD_TARGET_REPO }}
+          TOKEN: ${{ secrets.MARKET_REBUILD_TOKEN }}
+        run: |
+          missing=()
+          [ -n "$TARGET_REPO" ] || missing+=("variable MARKET_REBUILD_TARGET_REPO")
+          [ -n "$TOKEN" ] || missing+=("secret MARKET_REBUILD_TOKEN")
+          if [ "${#missing[@]}" -gt 0 ]; then
+            echo "::notice::跳过通知，缺少：${missing[*]}"
+            exit 0
+          fi
+          curl --fail-with-body --silent --show-error \
+            --retry 3 --retry-delay 5 --retry-all-errors \
+            -X POST \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${TARGET_REPO}/dispatches" \
+            -d '{"event_type":"market-updated"}'
