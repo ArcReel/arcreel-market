@@ -4,7 +4,7 @@
   "meta": {
     "name": "W2 Smoke Test",
     "author": "ArcReel",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "官方服务上线实测：验证一键提交链路，验证后关闭，不会合并。Launch smoke test, will be closed without merging."
   },
   "auth": {
