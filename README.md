@@ -66,7 +66,7 @@ endpoints/
 
 ## 投稿
 
-向本仓库提 PR。流程、内容准则和下架方式见 [CONTRIBUTING.md](CONTRIBUTING.md)。
+在 ArcReel 的「调用端点」界面点击「分享到官方市场」，即可从客户端一键提交，由官方服务代为开 PR；也可以自己向本仓库提 PR。两种方式的流程、内容准则、审核口径和下架方式见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
 ## 开自己的市场源
 
@@ -75,7 +75,7 @@ endpoints/
 3. 增删 `endpoints/<slug>/` 后 push 到默认分支，bot 会自动重生成 `arcreel-market.json` 并提交。默认分支不叫 `main` 时，把 `.github/workflows/publish-index.yml` 里的分支名改掉。默认分支没有开启保护时无需任何配置；开启了保护时见下方「进阶」。
 4. 在 ArcReel 设置页「市场」→「管理市场源」添加市场源，地址填 `owner/repo`。
 
-两个 workflow 只负责调用 ArcReel 主仓的可复用工作流，校验与生成规则由主仓维护，随主仓更新，你无需维护。
+校验与索引发布 workflow 只负责调用 ArcReel 主仓的可复用工作流，校验与生成规则由主仓维护，随主仓更新，你无需维护。
 
 ### 不用 CI
 
